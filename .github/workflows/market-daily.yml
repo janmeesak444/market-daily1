@@ -1,8 +1,9 @@
 name: market-daily
 on:
   schedule:
-    - cron: "30 15 * * 1-5"  # Weekdays 15:30 UTC ≈ 18:30 Tallinn
-  workflow_dispatch: {}
+    - cron: "35 * * * *"   # Run at :35 every hour (UTC); script posts only at 16:35 Tallinn
+  workflow_dispatch: {}     # Allows manual runs from the Actions tab
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -18,9 +19,6 @@ jobs:
           python -V
           pip install --upgrade pip
           pip install yfinance requests pytz pandas numpy
-
-      - name: Show installed packages (debug)
-        run: pip list
 
       - name: Run script
         env:
