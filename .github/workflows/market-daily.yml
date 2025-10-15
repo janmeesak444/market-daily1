@@ -8,10 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install yfinance requests pytz
-      - env:
+
+      - name: Install dependencies
+        run: |
+          python -V
+          pip install --upgrade pip
+          pip install yfinance requests pytz pandas numpy
+
+      - name: Show installed packages (debug)
+        run: pip list
+
+      - name: Run script
+        env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: python market_daily.py
